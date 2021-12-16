@@ -1,89 +1,33 @@
-import { Image, BlitzPage } from "blitz"
-import logo from "public/logo.png"
+import { BlitzPage } from "blitz"
+import { useAuthUser } from "@frontegg/nextjs"
 import { AdminPortal } from "@frontegg/nextjs"
-import { useAuth } from "@frontegg/nextjs"
 
 /*
  * This file is just for a pleasant getting started page for your new app.
  * You can delete everything in here and start from scratch if you like.
  */
 
-const Home: BlitzPage = () => {
-  const { user, isAuthenticated } = useAuth()
+const PrivatePage: BlitzPage = () => {
+  const user = useAuthUser()
   const handleClick = () => {
     AdminPortal.show()
   }
   return (
     <div className="container">
       <main>
-        <div className="logo">
-          <Image src={logo} alt="blitzjs" />
-        </div>
         <p>
-          <strong>Congrats!</strong> Your app is ready.
+          <strong>This page is only accessible if logged in!</strong>
         </p>
-        {isAuthenticated ? (
-          <>
-            <div>
-              <div>
-                <span>
-                  Logged in as: {user?.name} with {user?.email}
-                </span>
-              </div>
-              <div>
-                <button onClick={handleClick}>Settings</button>
-              </div>
-              <div>
-                <button onClick={() => alert(JSON.stringify(user, null, 2))}>
-                  View user object
-                </button>
-              </div>
-              <div>
-                <button>
-                  <a href="http://localhost:3000/account/logout">Logout</a>
-                </button>
-              </div>
-            </div>
-          </>
-        ) : (
-          <>
-            <div>
-              <button>
-                <a href="http://localhost:3000/account/login">Login</a>
-              </button>
-            </div>
-            <div>
-              <button>
-                <a href="http://localhost:3000/account/sign-up">Sign up</a>
-              </button>
-            </div>
-          </>
-        )}
-        <div className="buttons" style={{ marginTop: "5rem" }}>
-          <a
-            className="button"
-            href="https://blitzjs.com/docs/getting-started?utm_source=blitz-new&utm_medium=app-template&utm_campaign=blitz-new"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-          <a
-            className="button-outline"
-            href="https://github.com/blitz-js/blitz"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Github Repo
-          </a>
-          <a
-            className="button-outline"
-            href="https://discord.blitzjs.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Discord Community
-          </a>
+        <div>
+          <button onClick={handleClick}>Settings</button>
+        </div>
+        <div>
+          <button onClick={() => alert(JSON.stringify(user, null, 2))}>View user object</button>
+        </div>
+        <div>
+          <button>
+            <a href="http://localhost:3000/account/logout">Logout</a>
+          </button>
         </div>
       </main>
 
@@ -233,6 +177,6 @@ const Home: BlitzPage = () => {
   )
 }
 
-Home.suppressFirstRenderFlicker = true
+PrivatePage.suppressFirstRenderFlicker = true
 
-export default Home
+export default PrivatePage
